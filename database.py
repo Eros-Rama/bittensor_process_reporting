@@ -13,13 +13,10 @@ def load_previous_state():
     c.execute('SELECT data FROM state LIMIT 1')
     row = c.fetchone()
     conn.close()
-
     # Return the previous state as a dictionary, or initialize if empty
     if row and row[0]:
-        print(row[0])
-        print(type(row[0]))
         try:
-            return_cur = row[0].replace("'", '"')
+            return_cur = row[0]
             return json.loads(return_cur)
         except json.JSONDecodeError:
             print("Error decoding JSON from database. Returning default state.")

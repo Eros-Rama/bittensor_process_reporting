@@ -29,7 +29,8 @@ def initialize_database():
     c.execute('''CREATE TABLE state (data TEXT)''')
 
     # Fetch and insert the initial state
-    initial_state = fetch_initial_state()
+    # initial_state = fetch_initial_state()
+    initial_state = {"branches": ["feat/great", "feat-bro", "feat-older", "final", "folder", "master"], "prs": {"4": "open", "3": "closed", "2": "open", "1": "closed"}}
     json_data = json.dumps(initial_state)
 
     # Insert the JSON data into the table
