@@ -676,7 +676,6 @@ def compare_states(current_state, previous_state):
             default_branch = repo.default_branch
             comparison = repo.compare(default_branch, current_branch["branch_name"])
             if comparison.commits:
-                print(comparison.commits)
                 new_branches.append({
                     "repo_owner": current_branch["repo_owner"],
                     "repo_name": current_branch["repo_name"],
@@ -774,6 +773,8 @@ def generate_report(new_branches, updated_branches, deleted_branches, rebased_br
     if new_branches:
         report += "**New branches:**\n"
         for branch in new_branches:
+            if len(branch["commits"]) == 0:
+                continue
             repo_full_name = f"{branch['repo_owner']}/{branch['repo_name']}"
             branch_url = f"https://github.com/{repo_full_name}/tree/{branch['branch_name']}"
             report += f"\n{branch_url}\n"
