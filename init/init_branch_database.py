@@ -57,7 +57,7 @@ def print_database_contents(db_name='branch_state.db'):
         print(f"Repo: {row[0]}/{row[1]}, Branch: {row[2]}, Commit: {row[3]}")
     
     conn.close()
-if __name__ == "__main__":
+def init_dataset():
     # Fetch branches and commits from the main repo and specified forks
     repo_data = fetch_github_branches_and_commits(git_access_token, MAIN_REPO, FORKS)
     # Initialize the database with the fetched branch data
