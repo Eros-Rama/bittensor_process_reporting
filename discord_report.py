@@ -1,14 +1,12 @@
 # discord_report.py
 import requests
 import config
+import json
 
-def send_report_to_discord(chunks):
-    for chunk in chunks:
-        data = {
-            "content": chunk
-        }
-        response = requests.post(config.DISCORD_WEBHOOK_URL, json=data)
-        if response.status_code == 204:
-            print("Chunk sent successfully")
-        else:
-            print("Failed to send chunk", response.status_code, response.text)
+def post_to_discord(embed, webhook_url):
+    data = {
+        "embeds": [embed]
+    }
+
+    response = requests.post(webhook_url, data=json.dumps(data), headers={"Content-Type": "application/json"})
+    return response.status_code, response.text

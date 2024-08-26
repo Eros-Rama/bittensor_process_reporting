@@ -1,10 +1,11 @@
 # main.py
 from github_data import get_repo_data
 from state_comparison import compare_and_report
-from discord_report import send_report_to_discord
+from discord_report import post_to_discord
 from database import load_previous_state, update_database, update_database_with_branches
-from detecting import find_open_merged_pr
+from pr_report import find_open_merged_pr
 from find_branch_info import find_branch_info
+from branch_report import branch_report
 import config
 from github import Github
 
@@ -20,14 +21,15 @@ def main():
     current_state = {"branches": main_branches, "prs": main_prs}
     current_state["prs"] = {int(key): value for key, value in current_state["prs"].items()}
     previous_state["prs"] = {int(key): value for key, value in previous_state["prs"].items()}
-    report_merged_prs, report_open_prs, report_faild_prs = find_open_merged_pr(previous_state, current_state, main_repo)
+    report_prs = find_open_merged_pr(previous_state, current_state, main_repo)
     print("step1 passed")
-    # exit(0)
-    send_report_to_discord(report_merged_prs)
-    send_report_to_discord(report_open_prs)
-    send_report_to_discord(report_faild_prs)
-    branch_info = find_branch_info()
-    send_report_to_discord(find_branch_info)
+    post_to_discord(report_prs, config.DISCORD_WEBHOOK_URL)
+    # branch_info = find_branch_info()
+    # post_to_discord(branch_info)
+    exit(0)
+    branches_report, merged_branches_without_pr_report = branch_report()
+    post_to_discord(branches_report, config.DISCORD_WEBHOOK_URL)
+    post_to_discord(merged_branches_without_pr_report, config.DISCORD_WEBHOOK_URL)
     print("step2 passed")
     exit(0)
     update_database(current_state)

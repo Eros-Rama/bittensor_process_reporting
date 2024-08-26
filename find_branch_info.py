@@ -6,7 +6,7 @@ from datetime import datetime
 import config
 import sqlite3
 # from detecting import chanking_report
-from discord_report import send_report_to_discord
+# from discord_report import send_report_to_discord
 import re
 
 def wrap_urls_with_angle_brackets(text):
