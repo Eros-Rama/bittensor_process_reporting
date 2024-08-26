@@ -28,7 +28,7 @@ def format_report_prs(merged_prs, unmerged_prs, open_prs, repo):
         }
         for pr_number in merged_prs:
             pr_details = fetch_pr_details(repo, pr_number)
-            print(pr_details)
+            # print(pr_details)
             if pr_details:
                 merged_field["value"] += f"\n- [{pr_details['title']}]({pr_details['url']}) by [{pr_details['author']}](https://github.com/{pr_details['author']})\n"
                 merged_field["value"] += "  Commits:\n"
@@ -155,8 +155,8 @@ def find_open_merged_pr(previous_state, current_state, main_repo):
     # Extract previous and current PR states
     prev_prs = previous_state['prs']
     curr_prs = current_state['prs']
-    print(prev_prs)
-    print(curr_prs)
+    # print(prev_prs)
+    # print(curr_prs)
 
     # Check for new PRs in the current state
     for pr_number, curr_state in curr_prs.items():
@@ -190,9 +190,9 @@ def find_open_merged_pr(previous_state, current_state, main_repo):
 
 
 
-    print(merged_prs)
-    print(unmerged_prs)
-    print(open_prs)
+    # print(merged_prs)
+    # print(unmerged_prs)
+    # print(open_prs)
 
     # exit(0)
     return report_prs
