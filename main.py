@@ -26,11 +26,11 @@ def main():
     post_to_discord(report_prs, config.DISCORD_WEBHOOK_URL)
     # branch_info = find_branch_info()
     # post_to_discord(branch_info)
-    exit(0)
     branches_report, merged_branches_without_pr_report = branch_report()
     post_to_discord(branches_report, config.DISCORD_WEBHOOK_URL)
     post_to_discord(merged_branches_without_pr_report, config.DISCORD_WEBHOOK_URL)
     print("step2 passed")
+    exit(0)
     exit(0)
     update_database(current_state)
     branches = {branch.name: branch.commit.sha for branch in main_repo.get_branches()}

@@ -1,33 +1,23 @@
-# Example of using an invisible character in a Discord embed
-
 import requests
-import json
 import config
-def post_to_discord(embed, webhook_url):
+def send_discord_message(webhook_url, username, avatar_url, content):
     data = {
-        "embeds": embed
+        "username": username,
+        "avatar_url": avatar_url,
+        "content": content
     }
 
-    response = requests.post(webhook_url, json=data, headers={"Content-Type": "application/json"})
-    return response.status_code, response.text
+    response = requests.post(webhook_url, json=data)
 
-invisible_character = "‎"  # This is the invisible character
+    if response.status_code == 204:
+        print("Message sent successfully!")
+    else:
+        print(f"Failed to send message. Status code: {response.status_code}")
 
-embed = {
-    "title": "Example with Invisible Character",
-    "description": f"This text includes an invisible character: {invisible_character}",
-    "color": 3447003,
-    "fields": [
-        {
-            "name": "Field 1",
-            "value": f"Value with invisible character: {invisible_character}",
-            "inline": False
-        }
-    ],
-    "footer": {
-        "text": f"Footer with invisible character: {invisible_character}"
-    }
-}
-
+# Replace these variables with your own values
 webhook_url = config.DISCORD_WEBHOOK_URL
-post_to_discord(embed, webhook_url)
+username = "Custom Bot Name"
+avatar_url = "https://drive.google.com/file/d/1fUXe0G-wekDjuoM5hDXn-gfDMj_vXPXp/view?usp=drive_link"
+content = "Hello, this is a message with a custom avatar!"
+
+send_discord_message(webhook_url, username, avatar_url, content)

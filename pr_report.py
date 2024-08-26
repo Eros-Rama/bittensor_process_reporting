@@ -22,7 +22,7 @@ def format_report_prs(merged_prs, unmerged_prs, open_prs, repo):
 
     if merged_prs:
         merged_field = {
-            "name": "\n\n🔀 **Merged Pull Requests** 🔀\n\n",
+            "name": "\n\n🟣 **Merged Pull Requests** 🟣\n\n",
             "value": "",
             "inline": False
         }
@@ -42,7 +42,7 @@ def format_report_prs(merged_prs, unmerged_prs, open_prs, repo):
 
     if unmerged_prs:
         unmerged_field = {
-            "name": "\n\n❌ **Unmerged Pull Requests** ❌\n\n",
+            "name": "\n\n🔴 **Closed without merging** 🔴\n\n",
             "value": "",
             "inline": False
         }
@@ -61,7 +61,7 @@ def format_report_prs(merged_prs, unmerged_prs, open_prs, repo):
 
     if open_prs:
         open_field = {
-            "name": "\n\n📂 **Open Pull Requests** 📂\n\n",
+            "name": "\n\n🟢 **Opened Pull Requests** 🟢\n\n",
             "value": "",
             "inline": False
         }
@@ -79,7 +79,7 @@ def format_report_prs(merged_prs, unmerged_prs, open_prs, repo):
         fields.append(open_field)
 
     embed = {
-        "title": f"🚀 **PULL REQUEST REPORT** 🚀",
+        "title": f"🚀 __ PULL REQUEST REPORT __ 🚀",
         "description": "This is a report of pull request activities.",
         "color": 32255,  # Hex color code in decimal
         "fields": fields,

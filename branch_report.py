@@ -216,7 +216,7 @@ def generate_report(new_branches, updated_branches, deleted_branches, rebased_br
             avatar = get_github_profile_image(branch["repo_owner"])
             repo_full_name = f"{branch['repo_owner']}/{branch['repo_name']}"
             branch_url = f"https://github.com/{repo_full_name}/tree/{branch['branch_name']}"
-            new_field["value"] += f"\n* **branch** : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
+            new_field["value"] += f"\n* *branch* : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
             # if avatar:
             #     new_field["value"] += f"![Profile Image]{avatar}\n"
             for i, commit in enumerate(branch["commits"]):
@@ -235,7 +235,7 @@ def generate_report(new_branches, updated_branches, deleted_branches, rebased_br
         for branch in updated_branches:
             repo_full_name = f"{branch['repo_owner']}/{branch['repo_name']}"
             branch_url = f"https://github.com/{repo_full_name}/tree/{branch['branch_name']}"
-            updated_field["value"] += f"\n* **branch** : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
+            updated_field["value"] += f"\n* *branch* : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
             for i, commit in enumerate(branch["commits"]):
                 if i:
                     updated_field["value"] += f"\n * [{commit['name']}]({commit['link']})"
@@ -252,7 +252,7 @@ def generate_report(new_branches, updated_branches, deleted_branches, rebased_br
         for branch in deleted_branches:
             repo_full_name = f"{branch['repo_owner']}/{branch['repo_name']}"
             branch_url = f"https://github.com/{repo_full_name}/tree/{branch['branch_name']}"
-            deleted_field["value"] += f"\n* **branch** : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
+            deleted_field["value"] += f"\n* *branch* : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
         fields.append(deleted_field)
 
     if rebased_branches:
@@ -264,7 +264,7 @@ def generate_report(new_branches, updated_branches, deleted_branches, rebased_br
         for branch in rebased_branches:
             repo_full_name = f"{branch['repo_owner']}/{branch['repo_name']}"
             branch_url = f"https://github.com/{repo_full_name}/tree/{branch['branch_name']}"
-            rebased_field["value"] += f"\n* **branch** : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
+            rebased_field["value"] += f"\n* *branch* : [{branch['branch_name']} [{repo_full_name}]]({branch_url})\n"
             for i, commit in enumerate(branch["commits"]):
                 if i:
                     rebased_field["value"] += f"\n * [{commit['name']}]({commit['link']})"
@@ -274,15 +274,15 @@ def generate_report(new_branches, updated_branches, deleted_branches, rebased_br
 
     embed = {
         "title": "🌟 __ BRANCH REPORT __ 🌟",
-        "description": "This is a report of branch activities.",
+        "description": "This is a report of branch movements.",
         "color": 642600,  # Hex color code in decimal
         "fields": fields,
         "thumbnail": {
             "url": "https://example.com/image.png"
         },
-        "footer": {
-            "text": "This is a footer text"
-        }
+        # "footer": {
+        #     "text": "This is a footer text"
+        # }
     }
 
     return embed
@@ -324,7 +324,7 @@ def update_database(current_state, db_name='branch_state.db'):
 
 def generate_merged_commits_without_pr_report(merged_commits_without_pr):
     field = {
-        "name": "The following commits were merged into the main branch without an associated pull request:\n\n",
+        "name": "The following commits were merged into the main branch of __bittensor__ repo without an associated pull request\n\n",
         "value": "",
         "inline": False
     }
@@ -339,15 +339,15 @@ def generate_merged_commits_without_pr_report(merged_commits_without_pr):
         field["value"] += "No commits were merged without a pull request.\n"
 
     embed = {
-        "title": "🔥 **MERGED COMMITS WITHOUT PR** 🔥",
+        "title": "🔥 __ MERGED COMMITS WITHOUT PR __ 🔥",
         "color": 12910592,  # Hex color code in decimal
         "fields": [field],
         "thumbnail": {
             "url": "https://example.com/image.png"
         },
-        "footer": {
-            "text": "This is a footer text"
-        }
+        # "footer": {
+        #     "text": "This is a footer text"
+        # }
     }
 
     return embed
@@ -368,12 +368,12 @@ def branch_report():
     if new_branches or updated_branches or deleted_branches or rebased_branches:
         report = generate_report(new_branches, updated_branches, deleted_branches, rebased_branches)
         # report = chunk_report(report)
-        post_to_discord(report, webhook)
+        # post_to_discord(report, webhook)
         # return report
 
     if merged_without_pr:
         merged_commits_without_pr_report = generate_merged_commits_without_pr_report(merged_without_pr)
-        post_to_discord(merged_commits_without_pr_report, webhook)
+        # post_to_discord(merged_commits_without_pr_report, webhook)
     # update_database(current_state)
     return report, merged_commits_without_pr_report
 
